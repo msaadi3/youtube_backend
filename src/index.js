@@ -1,7 +1,7 @@
 // second approach is to to create another file in db folder create function that would connect with db 
-// import connectDB from "./db/connectDB.js";
+import connectDB from "./db/connectDB.js";
 import dotenv from 'dotenv'
-import app from './app'
+import app from './app.js'
 
 dotenv.config({
     path: './.env'

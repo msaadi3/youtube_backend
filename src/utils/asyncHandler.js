@@ -1,6 +1,6 @@
 // asyncHandler(A wrapper function) with Promises approach
 export const asyncHandler = (requestHandler) => {
-    (err, req, res, next) => {
+    return (err, req, res, next) => {
         Promise.resolve(requestHandler(err, req, res, next)).catch((error) => next(error))
     }
 }
