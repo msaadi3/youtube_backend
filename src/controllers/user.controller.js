@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from '../utils/ApiError.js'
 import { ApiResponse } from '../utils/ApiResponse.js'
-import { User } from "../models/User.js";
+import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.service.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
@@ -15,6 +15,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     if ([fullName, userName, email, password].some((field) => field?.trim() === '')) {
         throw new ApiError(400, 'Please fill all fields')
     }
+
+    // console.log(req.body);
 
     // if (userName || fullName || email || password === '') {
     //     throw new ApiError(400, 'Please fill all fields')
@@ -30,6 +32,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 
     const avatarLocalPath = req.files?.avatar[0]?.path
 
+
+    // console.log(req.files)
+    // console.log(req.file)
+
     if (!avatarLocalPath) {
         throw new ApiError(400, 'Please upload avatar')
     }
@@ -40,7 +46,12 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, 'Error while uploading avatar')
     }
 
-    const coverImageLocalPath = req.files?.coverImage[0].path
+    // const coverImageLocalPath = req.files?.coverImage[0].path
+
+    let coverImageLocalPath
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
 
     let coverImage
     if (coverImageLocalPath) {
@@ -71,24 +82,3 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 
 
-
-// console.log(req.files)
-// console.log(req.body)
-// console.log(req.file)
-// console.log(req.files?.avatar[0].path)
-// console.log(req.files?.coverImage[0].path)
-// console.log(req.file?.path)
-// console.log(req.file?.filename)
-// console.log(req.file?.mimetype)
-// console.log(req.file?.size)
-// console.log(req.file?.originalname)
-// console.log(req.file?.fieldname)
-// console.log(req.file?.encoding)
-// console.log(req.file?.destination)
-// console.log(req.file?.path)
-// console.log(req.file?.filename)
-// console.log(req.file?.mimetype)
-// console.log(req.file?.size)
-// console.log(req.file?.originalname)
-// console.log(req.file?.fieldname)
-// console.log(req.file?.encoding)
