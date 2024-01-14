@@ -238,34 +238,34 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 })
 
 
-// const updateAccountDetails = asyncHandler(async (req, res) => {
-//     const { userName, fullName, email } = req.body
-//     const user = await User.findById(req.user?._id)
+const updateAccountDetails = asyncHandler(async (req, res) => {
+    const { userName, fullName, email } = req.body
+    const user = await User.findById(req.user?._id)
 
-//     if (!(userName || fullName || email)) {
-//         throw new ApiError(401, 'Please fill in the fiels you want to update')
-//     }
+    if (!(userName || fullName || email)) {
+        throw new ApiError(401, 'Please fill in the fiels you want to update')
+    }
 
-//     const updatedUser = await User.findByIdAndUpdate(
-//         req.user?._id,
-//         {
-//             $set:
-//             {
-//                 userName: userName || user.userName,
-//                 fullName: fullName || user.fullName,
-//                 email: email || user.email
-//             },
-//         },
-//         {
-//             new: true // updated response in return 
-//         }
+    const updatedUser = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set:
+            {
+                userName: userName || user.userName,
+                fullName: fullName || user.fullName,
+                email: email || user.email
+            },
+        },
+        {
+            new: true // updated response in return 
+        }
 
-//     ).select("-password")
+    ).select("-password")
 
-//     return res
-//         .status(200)
-//         .json(new ApiResponse(200, 'account details updated successfully', updatedUser))
-// })
+    return res
+        .status(200)
+        .json(new ApiResponse(200, 'account details updated successfully', updatedUser))
+})
 
 
 
@@ -367,6 +367,8 @@ const updateAvatar = asyncHandler(async (req, res) => {
         }
     ).select("-password")
 
+    // delete old avatar from cloudinary
+
     return res
         .status(200)
         .json(new ApiResponse(200, 'avatar changed successfully', updatedUser))
@@ -399,9 +401,21 @@ const updateCoverImg = asyncHandler(async (req, res) => {
         }
     ).select("-password")
 
+    // delete old cover image from cloudinary
+
     return res
         .status(200)
         .json(new ApiResponse(200, 'cover image changed successfully', updatedUser))
+})
+
+
+const getChannelProfile = asyncHandler(async (req, res) => {
+
+})
+
+
+const getWatchHistory = asyncHandler(async (req, res) => {
+
 })
 
 export {
@@ -411,10 +425,15 @@ export {
     refreshAccessToken,
     changeCurrentPassword,
     getCurrentUser,
-    // updateAccountDetails,
+    updateAccountDetails,
     changeFullName,
     changeUserName,
     changeEmail,
     updateAvatar,
-    updateCoverImg
+    updateCoverImg,
+    getChannelProfile,
+    getWatchHistory
 }
+
+
+// pending -> delete avatar and cover image from cloudinary after uploading successfully uploading new / updated picture on cloudinary
