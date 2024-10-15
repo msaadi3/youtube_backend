@@ -10,7 +10,7 @@ const commentSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video"
     },
-    tweet: { // added by myself  
+    tweet: { 
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tweet"
     },
